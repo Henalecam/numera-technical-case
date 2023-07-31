@@ -5,4 +5,6 @@ portfolio_ofertas = pd.read_csv('./Datas/portfolio_ofertas.csv')
 clientes = pd.read_csv('./Datas/clientes.csv')
 ofertas = pd.read_csv('./Datas/ofertas.csv')
 
-# * não vi tanta necessida após ter feito o "membro-desde" pelo R
+# Replace all 'oferta concluída' to 'oferta concluida' in the 'tipo_evento' column
+ofertas['tipo_evento'] = ofertas['tipo_evento'].str.replace('oferta conclu�da', 'oferta concluida')
+

@@ -1,4 +1,3 @@
-
 # BEGIN: 7x3zv9c5d2j1
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,22 +6,16 @@ portfolio_ofertas = pd.read_csv('./Datas/portfolio_ofertas.csv', encoding='utf-8
 clientes = pd.read_csv('./Datas/clientes.csv', encoding='utf-8')
 ofertas = pd.read_csv('./Datas/ofertas.csv', encoding='utf-8')
 
-# Merge clientes with ofertas based on id_cliente column
-ofertas = pd.merge(ofertas, clientes[['id', 'renda_anual']], left_on='cliente', right_on='id')
+# * Filtra Homem e mulher em grupos separados
 
+clientes_f = clientes[clientes['genero'] == 'F']
+clientes_m = clientes[clientes['genero'] == 'M']
 
-grouped_data = ofertas.groupby(['renda_anual', 'tipo_evento']).size().unstack()
+ofertas_clientes = pd.merge(ofertas, clientes, left_on='cliente', right_on='id')
 
-# Plot the grouped data with a line plot
-grouped_data.plot(kind='line', marker='o', linestyle='-')
+# * soma de recompensas por id
+recompensas_por_id = ofertas.groupby('cliente')['recompensa'].sum()
 
-# Add labels and title
-plt.xlabel('Renda Anual')
-plt.ylabel('Densidade')
-plt.title('Renda Anual x Tipo de Evento')
-
-plt.legend(title='Tipo de Evento', loc='upper left')  # Show legend with event types
-
-plt.grid(True)  # Add grid lines for better readability
-
-plt.show()
+# * Os 1000 maiores acumuladores de recompensa
+top_1000_ids = recompensas_por_id.nlargest(1000).index.tolist()
+clientes_top_1000 = clientes[clientes['id'].isin(top_1000_ids)]
