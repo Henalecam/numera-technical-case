@@ -79,3 +79,15 @@ plt.ylabel('Renda Anual')
 plt.hexbin(clientes_top_1000['idade'], clientes_top_1000['renda_anual'], gridsize=20, cmap='viridis')
 plt.colorbar().set_label('Densidade')
 plt.show()
+
+# * Gráfico de Tipo_evento X Idade - Com densidade
+idade_tipo_evento = ofertas_clientes[['idade', 'tipo_evento']]
+
+idade_tipo_evento['idade_intervalo'] = pd.cut(idade_tipo_evento['idade'], bins=range(10, 121, 10))
+idade_tipo_evento_count = idade_tipo_evento.groupby(['idade_intervalo', 'tipo_evento']).size().unstack()
+
+idade_tipo_evento_count.plot(kind='bar', stacked=True)
+
+plt.show()
+
+# * Gráfico Torta mulher x homem
