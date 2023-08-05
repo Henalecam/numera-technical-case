@@ -26,3 +26,6 @@ labels = ['Mulheres', 'Homens']
 plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 plt.title('Distribuição de gênero')
 plt.show()
+
+
+sizes = [len(clientes_f)]
